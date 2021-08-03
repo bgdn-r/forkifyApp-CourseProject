@@ -1,4 +1,4 @@
-import icons from 'url:../../img/icons.svg'; // Parcel 2
+import icons from 'url:../../img/icons.svg';
 
 export default class View {
   _data;
@@ -17,12 +17,8 @@ export default class View {
   }
 
   update(data) {
-    // if (!data || (Array.isArray(data) && data.length === 0))
-    //   return this.renderError();
-
     this._data = data;
     const newMarkup = this._generateMarkup();
-    //NOTENOTENOTENOTENOTE
     const newDOM = document.createRange().createContextualFragment(newMarkup);
     const newElements = Array.from(newDOM.querySelectorAll('*'));
     const curElements = Array.from(this._parentElement.querySelectorAll('*'));
@@ -30,17 +26,13 @@ export default class View {
     newElements.forEach((newEl, i) => {
       const curEl = curElements[i];
 
-      //NOTE Update changed text
       if (
-        //NOTENOTENOTENOTENOTE
         !newEl.isEqualNode(curEl) &&
         newEl.firstChild?.nodeValue.trim() !== ''
       ) {
-        // console.log(newEl.firstChild.nodeValue.trim(), '💥💥💥');
         curEl.textContent = newEl.textContent;
       }
 
-      //NOTE Update changed attributes
       if (!newEl.isEqualNode(curEl))
         Array.from(newEl.attributes).forEach(attr =>
           curEl.setAttribute(attr.name, attr.value)
